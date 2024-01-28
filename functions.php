@@ -50,6 +50,7 @@ function build_zone_setup() {
 	register_nav_menus(
 		array(
 			'menu-1' => esc_html__( 'Primary', 'build-zone' ),
+			'primary' => __( 'Primary Menu', 'build-zone' ),
 		)
 	);
 
@@ -135,12 +136,48 @@ function build_zone_widgets_init() {
 add_action( 'widgets_init', 'build_zone_widgets_init' );
 
 /**
+ * Register Custom Navigation Walker
+ */
+function blz_register_navwalker(){
+	require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
+}
+add_action( 'after_setup_theme', 'blz_register_navwalker' );
+
+function blz_slug_provide_walker_instance( $args ) {
+    if ( isset( $args['walker'] ) && is_string( $args['walker'] ) && class_exists( $args['walker'] ) ) {
+        $args['walker'] = new $args['walker'];
+    }
+    return $args;
+}
+add_filter( 'wp_nav_menu_args', 'blz_slug_provide_walker_instance', 1001 );
+
+add_filter( 'nav_menu_link_attributes', 'blz_prefix_bs5_dropdown_data_attribute', 20, 3 );
+/**
+ * Use namespaced data attribute for Bootstrap's dropdown toggles.
+ *
+ * @param array    $atts HTML attributes applied to the item's `<a>` element.
+ * @param WP_Post  $item The current menu item.
+ * @param stdClass $args An object of wp_nav_menu() arguments.
+ * @return array
+ */
+function blz_prefix_bs5_dropdown_data_attribute( $atts, $item, $args ) {
+    if ( is_a( $args->walker, 'WP_Bootstrap_Navwalker' ) ) {
+        if ( array_key_exists( 'data-toggle', $atts ) ) {
+            unset( $atts['data-toggle'] );
+            $atts['data-bs-toggle'] = 'dropdown';
+        }
+    }
+    return $atts;
+}
+
+/**
  * Enqueue scripts and styles.
  */
 function build_zone_scripts() {
+	wp_enqueue_style( 'bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css', array(), '5.0.2' );
+	wp_enqueue_script( 'bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', array( 'jquery' ), '5.0.2', true );
 	wp_enqueue_style( 'build-zone-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'build-zone-style', 'rtl', 'replace' );
-
 	wp_enqueue_script( 'build-zone-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
