@@ -26,43 +26,9 @@
 	<header id="masthead" class="site-header">
 		<div class="container-fluid">
 			<div class="row">
-				<nav class="col-12 navbar navbar-expand-md main-navigation" role="navigation">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'your-theme-slug' ); ?>">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-
-					<div class="site-branding">
-						<?php
-						the_custom_logo();
-						if ( is_front_page() && is_home() ) :
-							?>
-							<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-							<?php
-						else :
-							?>
-							<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-							<?php
-						endif;
-						$build_zone_description = get_bloginfo( 'description', 'display' );
-						if ( $build_zone_description || is_customize_preview() ) :
-							?>
-							<p class="site-description"><?php echo $build_zone_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-						<?php endif; ?>
-					</div><!-- .site-branding -->
-
-					<?php
-						wp_nav_menu( array(
-							'theme_location'    => 'menu-1',
-							'depth'             => 2,
-							'container'         => 'div',
-							'container_class'   => 'collapse navbar-collapse',
-							'container_id'      => 'bs-example-navbar-collapse-1',
-							'menu_class'        => 'nav navbar-nav',
-							'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
-							'walker'          => 'WP_Bootstrap_Navwalker',
-						));
-					?>
+				<nav class="col-12 navbar d-flex navbar-expand-md main-navigation" role="navigation">
+					<?php get_template_part('template-parts/navigation/site', 'branding'); ?>
+					<?php get_template_part('template-parts/navigation/main', 'menu'); ?>
 				</nav>
 			</div>
 		</div>
