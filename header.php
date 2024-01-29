@@ -26,7 +26,7 @@
 	<header id="masthead" class="site-header">
 		<div class="container-fluid">
 			<div class="row">
-				<nav class="col-12 navbar d-flex navbar-expand-md main-navigation" role="navigation">
+				<nav class="col-12 navbar d-flex navbar-expand-md" role="navigation">
 					<?php get_template_part('template-parts/navigation/site', 'branding'); ?>
 					<?php get_template_part('template-parts/navigation/main', 'menu'); ?>
 				</nav>
