@@ -11,7 +11,7 @@
 
 ?>
 
-	<footer id="colophon" class="site-footer">
+<!--	<footer id="colophon" class="site-footer">
 		<div class="site-info">
 			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'build-zone' ) ); ?>">
 				<?php
@@ -24,9 +24,9 @@
 				/* translators: 1: Theme name, 2: Theme author. */
 				printf( esc_html__( 'Theme: %1$s by %2$s.', 'build-zone' ), 'build-zone', '<a href="https://www.linkedin.com/in/santiago-alvarado-1275601b1/">Santiago Alvarado</a>' );
 				?>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+		</div>
+	</footer>-->
+</div>
 
 <?php wp_footer(); ?>
 
